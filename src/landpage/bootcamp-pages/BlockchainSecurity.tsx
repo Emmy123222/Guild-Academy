@@ -12,6 +12,8 @@ import Rect47b from '../../assets/landing/Bootcamp/Rectangle 47 (1).png'
 import Rect48 from '../../assets/landing/Bootcamp/Rectangle 48.png'
 import Rect49 from '../../assets/landing/Bootcamp/Rectangle 49.png'
 import Rect49b from '../../assets/landing/Bootcamp/Rectangle 49 (1).png'
+import CompaniesSection from '../common/CompaniesSection'
+import PartnerCompanies from '../PartnerCompanies'
 
 export default function BlockchainSecurity() {
   const { isDark } = useTheme()
@@ -163,40 +165,8 @@ export default function BlockchainSecurity() {
         </div>
       </div>
 
-      {/* Partners strip with marquee */}
-      <div className={`${isDark ? 'bg-[#F4FBF7]/0' : 'bg-[#F4FBF7]'} py-8 sm:py-10`}>
-        <div className="mx-auto max-w-7xl px-6">
-          <h3 className="text-center text-sm font-semibold text-neutral-500">Our Partners</h3>
-          <div className="mt-6 marquee relative">
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white to-transparent dark:from-black" aria-hidden />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent dark:from-black" aria-hidden />
-            <div className="marquee-track items-center gap-10">
-              <div className="flex items-center gap-12 sm:gap-16 md:gap-20">
-                {logos.map((logo) => (
-                  <img
-                    key={`a-${logo.alt}`}
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="opacity-90 hover:opacity-100 transition-opacity shrink-0"
-                    draggable={false}
-                  />
-                ))}
-              </div>
-              <div className="flex items-center gap-12 sm:gap-16 md:gap-20" aria-hidden>
-                {logos.map((logo) => (
-                  <img
-                    key={`b-${logo.alt}`}
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="opacity-90 hover:opacity-100 transition-opacity shrink-0"
-                    draggable={false}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Companies section (dark uses PartnerCompanies) */}
+      {isDark ? <PartnerCompanies /> : <CompaniesSection logos={logos} />}
     </section>
   )
 }

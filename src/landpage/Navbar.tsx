@@ -39,16 +39,26 @@ const ThemeButton = ({ isDark, onToggle }: { isDark: boolean; onToggle: () => vo
   )
 }
 
-const NavPill = ({ label, href = '#' }: { label: string; href?: string }) => {
+const NavPill = ({ label, href = '#/' }: { label: string; href?: string }) => {
   const { isDark } = useTheme()
   const lightClasses =
     'rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 shadow-sm hover:text-gray-800'
   const darkClasses =
     'px-3 py-2 text-sm font-medium text-gray-300 hover:text-white'
+  const handleClick = () => {
+    const target = href.startsWith('#') ? href : `#${href}`
+    window.location.hash = target
+  }
   return (
-    <a href={href} className={isDark ? darkClasses : lightClasses}>
+    <button
+      type="button"
+      role="link"
+      aria-label={label}
+      onClick={handleClick}
+      className={isDark ? darkClasses : lightClasses}
+    >
       {label}
-    </a>
+    </button>
   )
 }
 
@@ -64,9 +74,9 @@ export default function Navbar() {
         <nav className="hidden gap-2 md:flex">
           <NavPill label="Home" href="#/" />
           <NavPill label="Bootcamps" href="#/bootcamps" />
-          <NavPill label="Testimonial" />
-          <NavPill label="Events" />
-          <NavPill label="About us" />
+          <NavPill label="Testimonial" href="#/testimonials" />
+          <NavPill label="Events" href="#/events" />
+          <NavPill label="About us" href="#/about" />
         </nav>
 
         <div className="flex items-center gap-2">
@@ -125,9 +135,9 @@ export default function Navbar() {
           <nav className="mt-4 space-y-6 text-lg">
             <button onClick={() => { window.location.hash = '#/'; setOpen(false) }} className={`block text-left ${isDark ? 'text-white' : 'text-black'} font-semibold`}>Home</button>
             <button onClick={() => { window.location.hash = '#/bootcamps'; setOpen(false) }} className={`block text-left ${isDark ? 'text-neutral-300' : 'text-neutral-800'}`}>Bootcamps</button>
-            <button className={`block text-left ${isDark ? 'text-neutral-300' : 'text-neutral-800'}`}>Testimonial</button>
-            <button className={`block text-left ${isDark ? 'text-neutral-300' : 'text-neutral-800'}`}>Events</button>
-            <button className={`block text-left ${isDark ? 'text-neutral-300' : 'text-neutral-800'}`}>About us</button>
+            <button onClick={() => { window.location.hash = '#/testimonials'; setOpen(false) }} className={`block text-left ${isDark ? 'text-neutral-300' : 'text-neutral-800'}`}>Testimonial</button>
+            <button onClick={() => { window.location.hash = '#/events'; setOpen(false) }} className={`block text-left ${isDark ? 'text-neutral-300' : 'text-neutral-800'}`}>Events</button>
+            <button onClick={() => { window.location.hash = '#/about'; setOpen(false) }} className={`block text-left ${isDark ? 'text-neutral-300' : 'text-neutral-800'}`}>About us</button>
           </nav>
 
           {/* Bottom CTA and socials */}

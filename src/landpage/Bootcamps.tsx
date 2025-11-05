@@ -1,5 +1,7 @@
 import { useTheme } from '../theme/ThemeProvider'
 import { useState } from 'react'
+import { getStoredPrograms } from './admin/storage'
+import type { StoredProgram } from './admin/storage'
 import hand from '../assets/landing/hand.png'
 import comingSoon from '../assets/landing/Coming Soon.png'
 import hand1 from '../assets/landing/hand1.png'
@@ -7,7 +9,7 @@ import hand2 from '../assets/landing/hand2.png'
 import hand3 from '../assets/landing/hand3.png'
 import Check from '../assets/landing/check-badge_svgrepo.com.png'
 
-type Program = {
+export type Program = {
   title: string
   blurb: string
   level: 'Beginner' | 'Intermediate' | 'Advanced'
@@ -20,7 +22,7 @@ type Program = {
   slug: string
 }
 
-const programs: Program[] = [
+export const programsStatic: Program[] = [
   {
     title: 'Product Design Bootcamp',
     blurb:
@@ -75,13 +77,18 @@ const programs: Program[] = [
   }
 ]
 
+export function getAllPrograms(): Program[] {
+  const stored: StoredProgram[] = getStoredPrograms()
+  return [...stored, ...programsStatic]
+}
+
 // Removed Badge helper (unused after redesign)
 
 export default function Bootcamps() {
   const { isDark } = useTheme()
   const [filter, setFilter] = useState<'All' | 'Web2' | 'Web3'>('All')
 
-  const filteredPrograms = programs.filter((p) => filter === 'All' || p.category === filter)
+  const filteredPrograms = getAllPrograms().filter((p) => filter === 'All' || p.category === filter)
 
   return (
     <section id="bootcamps" className={`w-full ${isDark ? 'bg-black' : 'bg-white'}`}>

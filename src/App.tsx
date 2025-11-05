@@ -7,6 +7,12 @@ import Web3ProtocolEngineering from './landpage/bootcamp-pages/Web3ProtocolEngin
 import BlockchainSecurity from './landpage/bootcamp-pages/BlockchainSecurity'
 import Apply from './landpage/bootcamp-pages/Apply'
 import BootcampRegister from './landpage/register/BootcampRegister'
+import RegisterSuccess from './landpage/register/RegisterSuccess'
+import TestimonialsPage from './landpage/testimonials/TestimonialsPage'
+import EventsPage from './landpage/events/EventsPage'
+import AboutPage from './landpage/about/AboutPage'
+import EventDetailPage from './landpage/events/EventDetailPage'
+import AdminPage from './landpage/admin/AdminPage'
 
 function App() {
   const [hash, setHash] = useState<string>(window.location.hash || '#/')
@@ -19,6 +25,15 @@ function App() {
 
   const isBootcamps = hash === '#/bootcamps'
   const isRegister = hash === '#/apply'
+  const isRegisterSuccess = hash === '#/apply/success'
+  const isTestimonials = hash === '#/testimonials'
+  const isEvents = hash === '#/events'
+  const isAbout = hash === '#/about'
+  const isAdmin = hash === '#/admin'
+  const eventSlug = useMemo(() => {
+    const match = hash.match(/^#\/events\/(.+)$/)
+    return match ? match[1] : null
+  }, [hash])
 
   const bootcampSlug = useMemo(() => {
     const match = hash.match(/^#\/bootcamps\/(.+)$/)
@@ -47,6 +62,37 @@ function App() {
         {isRegister ? (
           <>
             <BootcampRegister />
+            <FooterCTA />
+          </>
+        ) : isRegisterSuccess ? (
+          <>
+            <RegisterSuccess />
+            <FooterCTA />
+          </>
+        ) : isTestimonials ? (
+          <>
+            <TestimonialsPage />
+            <FooterCTA />
+          </>
+        ) : isEvents ? (
+          <>
+            <EventsPage />
+            <FooterCTA />
+          </>
+        ) : eventSlug ? (
+          <>
+            <EventDetailPage slug={eventSlug} />
+            <FooterCTA />
+          </>
+        ) : isAbout ? (
+          <>
+            <AboutPage />
+
+            <FooterCTA />
+          </>
+        ) : isAdmin ? (
+          <>
+            <AdminPage />
             <FooterCTA />
           </>
         ) : BootcampDetail ? (
